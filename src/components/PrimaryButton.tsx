@@ -1,12 +1,15 @@
 import styled from "@emotion/styled";
-import { ComponentProps } from "react";
-import { Button } from "react-bootstrap";
+import { Button, ButtonProps } from "react-bootstrap";
 
-export const PrimaryButton = styled((props: ComponentProps<typeof Button>) => {
-  return <Button {...props} variant="outline-dark" />;
-})`
+type PrimaryButtonProps = ButtonProps & { right?: boolean };
+
+export const PrimaryButton: React.FC<PrimaryButtonProps> = styled(
+  (props: PrimaryButtonProps) => {
+    return <Button {...props} variant="dark" />;
+  }
+)`
   align-self: flex-start;
   align-self: center;
   margin: 2px;
-  border: 2px solid;
+  float: ${({ right }) => (right ? `right` : `left`)};
 `;
