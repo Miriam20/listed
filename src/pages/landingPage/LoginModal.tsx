@@ -70,7 +70,7 @@ const LogiModal: React.FC<LogiModalProps> = ({
         <Modal.Body>
           <Form noValidate onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="control.email">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>E-mail</Form.Label>
               <Form.Control
                 required
                 type="email"

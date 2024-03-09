@@ -13,8 +13,6 @@ const TextContainer = styled.p<TextProps>`
   margin: auto;
 `;
 
-const Text: React.FC<TextProps> = ({ children }) => {
+export const Text: React.FC<TextProps> = ({ children }) => {
   return <TextContainer>{children}</TextContainer>;
 };
-
-export default Text;

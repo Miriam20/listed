@@ -1,11 +1,12 @@
-import Text from "../../components/Text";
+import { Text } from "../../components/Text";
 import Card from "react-bootstrap/esm/Card";
-import { signInWithPopup, signOut } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../config/firebase";
 import { SecondaryButton } from "../../components/SecondaryButton";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import SignUpModal from "./SignUpModal";
 import LoginModal from "./LoginModal";
+import { Navigate } from "react-router-dom";
 
 const LandingPage = () => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -29,52 +30,53 @@ const LandingPage = () => {
     setShowLoginModal(true);
   };
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      setIsUserLoggedIn(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  useEffect(() => {
+    return onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsUserLoggedIn(true);
+      } else {
+        setIsUserLoggedIn(false);
+      }
+    });
+  }, []);
 
   return (
-    <Card title="listed">
+    <>
       {isUserLoggedIn ? (
-        <Fragment>
-          <Text>{`Hello ${auth?.currentUser?.email}!`}</Text>
-          <SecondaryButton type="submit" onClick={logout}>
-            Logout
-          </SecondaryButton>
-        </Fragment>
+        <Navigate to={"/"} replace />
       ) : (
-        <Fragment>
-          <Text>Sign-up</Text>
-          <SecondaryButton onClick={openEmailSignInModal}>
-            Email and password
-          </SecondaryButton>
-          <SecondaryButton onClick={signInWithGoogle}>Google</SecondaryButton>
-          <Text>Or Login</Text>
-          <SecondaryButton onClick={openLoginModal} variant="primary">
-            Login
-          </SecondaryButton>
-          {showSignUpModal && (
-            <SignUpModal
-              show={showSignUpModal}
-              setShow={setShowSignUpModal}
-              setUserLoggedIn={setIsUserLoggedIn}
-            />
-          )}
-          {showLoginModal && (
-            <LoginModal
-              show={showLoginModal}
-              setShow={setShowLoginModal}
-              setUserLoggedIn={setIsUserLoggedIn}
-            />
-          )}
-        </Fragment>
+        <Card title="listed">
+          <Fragment>
+            <Text>{auth.currentUser?.email ?? "not logged in"}</Text>
+            <Text>Sign-up</Text>
+            <SecondaryButton onClick={openEmailSignInModal}>
+              E-mail and password
+            </SecondaryButton>
+            <Text>Or Login</Text>
+            <SecondaryButton onClick={openLoginModal} variant="primary">
+              Login with e-mail and password
+            </SecondaryButton>
+            <SecondaryButton onClick={signInWithGoogle}>
+              Login with Google
+            </SecondaryButton>
+            {showSignUpModal && (
+              <SignUpModal
+                show={showSignUpModal}
+                setShow={setShowSignUpModal}
+                setUserLoggedIn={setIsUserLoggedIn}
+              />
+            )}
+            {showLoginModal && (
+              <LoginModal
+                show={showLoginModal}
+                setShow={setShowLoginModal}
+                setUserLoggedIn={setIsUserLoggedIn}
+              />
+            )}
+          </Fragment>
+        </Card>
       )}
-    </Card>
+    </>
   );
 };
 
