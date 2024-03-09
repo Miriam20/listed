@@ -21,6 +21,7 @@
     "react": "18.2.0",
     "react-bootstrap": "2.9.2",
     "react-dom": "18.2.0",
+    "react-router-dom": "6.21.2",
     "react-scripts": "5.0.1",
     "sass-loader": "13.3.3",
     "style-loader": "3.3.4",
@@ -52,7 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^20.10.7",
-    "sass": "^1.69.7"
+    "@types/node": "20.10.7",
+    "sass": "1.69.7"
   }
 }
