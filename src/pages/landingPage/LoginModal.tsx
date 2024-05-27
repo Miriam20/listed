@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, Fragment, useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { PrimaryButton } from "../../components/PrimaryButton";
@@ -7,13 +7,13 @@ import { auth } from "../../config/firebase";
 import { FIREBASE_ERROR_CODES } from "../../constants";
 import Alert from "react-bootstrap/esm/Alert";
 
-type LogiModalProps = {
+type LoginModalProps = {
   show: boolean;
   setShow: (show: boolean) => void;
   setUserLoggedIn: (isUserLoggedIn: boolean) => void;
 };
 
-const LogiModal: React.FC<LogiModalProps> = ({
+const LoginModal: React.FC<LoginModalProps> = ({
   show,
   setShow,
   setUserLoggedIn,
@@ -57,59 +57,57 @@ const LogiModal: React.FC<LogiModalProps> = ({
   };
 
   return (
-    <Fragment>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        {invalidCredentials && (
-          <Alert variant="danger">
-            Oops... It looks like you provided invalid credentials!
-          </Alert>
-        )}
-        <Modal.Body>
-          <Form noValidate onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="control.email">
-              <Form.Label>E-mail</Form.Label>
-              <Form.Control
-                required
-                type="email"
-                placeholder="name@example.com"
-                isInvalid={emptyEmail}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              {emptyEmail && (
-                <Form.Control.Feedback type="invalid">
-                  Please, provide an e-mail
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="control.password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                type="password"
-                isInvalid={emptyPassword}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              {emptyPassword && (
-                <Form.Control.Feedback type="invalid">
-                  Please, provide a password
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-            <PrimaryButton right type="submit">
-              Submit
-            </PrimaryButton>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </Fragment>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Login</Modal.Title>
+      </Modal.Header>
+      {invalidCredentials && (
+        <Alert variant="danger">
+          Oops... It looks like you provided invalid credentials!
+        </Alert>
+      )}
+      <Modal.Body>
+        <Form noValidate onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="control.email">
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control
+              required
+              type="email"
+              placeholder="name@example.com"
+              isInvalid={emptyEmail}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            {emptyEmail && (
+              <Form.Control.Feedback type="invalid">
+                Please, provide an e-mail
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="control.password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              required
+              type="password"
+              isInvalid={emptyPassword}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            {emptyPassword && (
+              <Form.Control.Feedback type="invalid">
+                Please, provide a password
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <PrimaryButton right type="submit">
+            Submit
+          </PrimaryButton>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 
-export default LogiModal;
+export default LoginModal;
