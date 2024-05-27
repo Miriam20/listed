@@ -1,13 +1,13 @@
 import { Fragment } from "react";
 import { Navigate } from "react-router-dom";
-import { User } from "firebase/auth";
 import NavigationBar from "./NavigationBar";
 import Spinner from "./Spinner";
+import { User } from "../entities/User";
 
 type PrivateRouteProps = {
   isUserLoggedIn: boolean;
   isLoading: boolean;
-  user: User | null;
+  user: User;
   logout: () => void;
   children?: React.ReactNode | null;
 };

@@ -1,11 +1,11 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { PrimaryButton } from "./PrimaryButton";
-import { User } from "firebase/auth";
+import { User } from "../entities/User";
 
 type NavigationBarProps = {
   logout: () => void;
-  user: User | null;
+  user: User;
 };
 
 const NavigationBar: React.FC<NavigationBarProps> = ({

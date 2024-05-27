@@ -10,6 +10,10 @@ const App = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(
     Boolean(auth.currentUser)
   );
+  const [currentUser, setCurrentUser] = useState({
+    email: "",
+    displayName: "",
+  });
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,8 +28,12 @@ const App = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
+      if (user?.email && user.displayName) {
         setIsUserLoggedIn(true);
+        setCurrentUser({
+          email: user.email,
+          displayName: user.displayName,
+        });
       }
       setIsLoading(false);
     });
@@ -45,9 +53,9 @@ const App = () => {
                 isUserLoggedIn={isUserLoggedIn}
                 isLoading={isLoading}
                 logout={logout}
-                user={auth.currentUser}
+                user={currentUser}
               >
-                <Home user={auth.currentUser} />
+                <Home user={currentUser} />
               </PrivateRoute>
             }
           />
