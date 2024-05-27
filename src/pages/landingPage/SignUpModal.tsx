@@ -1,10 +1,11 @@
 import { BaseSyntheticEvent, Fragment, useCallback, useState } from "react";
 import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { FIREBASE_ERROR_CODES } from "../../constants";
+import Modal from "../../components/Modal/Modal";
+import ModalBody from "../../components/Modal/ModalBody";
 
 type SignUpModalProps = {
   show: boolean;
@@ -67,11 +68,8 @@ const SignUpModal: React.FC<SignUpModalProps> = ({
 
   return (
     <Fragment>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Sign Up</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal title="Sign Up" show={show} close={handleClose}>
+        <ModalBody>
           <Form noValidate onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="control.email">
               <Form.Label>E-mail</Form.Label>
@@ -145,7 +143,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({
               Save
             </PrimaryButton>
           </Form>
-        </Modal.Body>
+        </ModalBody>
       </Modal>
     </Fragment>
   );

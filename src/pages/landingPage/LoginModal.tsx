@@ -1,11 +1,12 @@
 import { BaseSyntheticEvent, useState } from "react";
 import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { FIREBASE_ERROR_CODES } from "../../constants";
 import Alert from "react-bootstrap/esm/Alert";
+import Modal from "../../components/Modal/Modal";
+import ModalBody from "../../components/Modal/ModalBody";
 
 type LoginModalProps = {
   show: boolean;
@@ -57,16 +58,13 @@ const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Login</Modal.Title>
-      </Modal.Header>
+    <Modal title="login" show={show} close={handleClose}>
       {invalidCredentials && (
         <Alert variant="danger">
           Oops... It looks like you provided invalid credentials!
         </Alert>
       )}
-      <Modal.Body>
+      <ModalBody>
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="control.email">
             <Form.Label>E-mail</Form.Label>
@@ -105,7 +103,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
             Submit
           </PrimaryButton>
         </Form>
-      </Modal.Body>
+      </ModalBody>
     </Modal>
   );
 };
